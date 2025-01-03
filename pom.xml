@@ -62,6 +62,7 @@
                 <activeByDefault>true</activeByDefault> <!-- Automatically activates the SonarQube profile -->
             </activation>
             <properties>
+                <sonar.login>SonarQube-token</sonar.login>
                 <!-- Set the SonarQube project key -->
                 <sonar.projectKey>helloworld</sonar.projectKey> <!-- This must match your project key in SonarQube -->
                 
