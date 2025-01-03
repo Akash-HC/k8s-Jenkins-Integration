@@ -43,7 +43,42 @@
                     </archive>
                 </configuration>
             </plugin>
+
+            <!-- SonarQube Maven plugin -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version> <!-- You can use the latest version compatible with your SonarQube server -->
+            </plugin>
+
         </plugins>
     </build>
+
+    <!-- Define SonarQube properties in profiles (optional) -->
+    <profiles>
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault> <!-- Automatically activates the SonarQube profile -->
+            </activation>
+            <properties>
+                <!-- Set the SonarQube project key -->
+                <sonar.projectKey>helloworld</sonar.projectKey> <!-- This must match your project key in SonarQube -->
+                
+                <!-- SonarQube server URL -->
+                <sonar.host.url>http://localhost:9000</sonar.host.url> <!-- Adjust if SonarQube is hosted elsewhere -->
+
+                <!-- Set the sources location (the code is in the root of the project) -->
+                <sonar.sources>.</sonar.sources> <!-- This points to the current directory for source files -->
+
+                <!-- Set the binary folder for compiled classes -->
+                <sonar.java.binaries>target/classes</sonar.java.binaries> <!-- This is the default Maven target directory -->
+
+                <!-- Optional: Exclude test classes or other files you don't want analyzed -->
+                <!-- <sonar.exclusions>**/*Test.java</sonar.exclusions> -->
+
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
