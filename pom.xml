@@ -73,13 +73,8 @@
                     <!-- Ensure to scan the project directory -->
                     <scan>${project.basedir}</scan>
 
-                    <!-- Include or exclude specific file sets if needed -->
+                    <!-- Exclude unnecessary test scope dependencies -->
                     <includeTestScope>false</includeTestScope>
-
-                    <!-- Suppression file for known safe vulnerabilities -->
-                    <suppressionFiles>
-                        <suppressionFile>dependency-check-suppression.xml</suppressionFile>
-                    </suppressionFiles>
                 </configuration>
             </plugin>
         </plugins>
