@@ -21,6 +21,7 @@
     <!-- Define build configuration -->
     <build>
         <plugins>
+            <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -30,6 +31,8 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+            <!-- Maven JAR Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -44,42 +47,37 @@
                 </configuration>
             </plugin>
 
-            <!-- SonarQube Maven plugin -->
+            <!-- OWASP Dependency Check Maven Plugin -->
             <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.1.2184</version> <!-- You can use the latest version compatible with your SonarQube server -->
-            </plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>8.0.0</version> <!-- Update version as needed -->
+                <executions>
+                    <execution>
+                        <phase>verify</phase> <!-- Executes during the verify phase -->
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Directory for caching NVD data -->
+                    <dataDirectory>/cache/dependency-check</dataDirectory>
 
+                    <!-- Optional: Fail build on vulnerabilities -->
+                    <failBuildOnCVSS>7.0</failBuildOnCVSS>
+
+                    <!-- Optional: Suppress warnings -->
+                    <suppressionFiles>
+                        <suppressionFile>dependency-check-suppression.xml</suppressionFile>
+                    </suppressionFiles>
+
+                    <!-- Optional: Skip testing for certain scopes -->
+                    <scanSet>
+                        <scan>target/classes</scan> <!-- Ensure to scan your compiled code -->
+                    </scanSet>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <!-- Define SonarQube properties in profiles (optional) -->
-    <profiles>
-        <profile>
-            <id>sonar</id>
-            <activation>
-                <activeByDefault>true</activeByDefault> <!-- Automatically activates the SonarQube profile -->
-            </activation>
-            <properties>
-                <sonar.login>SonarQube-token</sonar.login>
-                <!-- Set the SonarQube project key -->
-                <sonar.projectKey>helloworld</sonar.projectKey> <!-- This must match your project key in SonarQube -->
-                
-                <!-- SonarQube server URL -->
-                <sonar.host.url>http://localhost:9000</sonar.host.url> <!-- Adjust if SonarQube is hosted elsewhere -->
-
-                <!-- Set the sources location (the code is in the root of the project) -->
-                <sonar.sources>.</sonar.sources> <!-- This points to the current directory for source files -->
-
-                <!-- Set the binary folder for compiled classes -->
-                <sonar.java.binaries>target/classes</sonar.java.binaries> <!-- This is the default Maven target directory -->
-
-                <!-- Optional: Exclude test classes or other files you don't want analyzed -->
-                <!-- <sonar.exclusions>**/*Test.java</sonar.exclusions> -->
-
-            </properties>
-        </profile>
-    </profiles>
-
 </project>
