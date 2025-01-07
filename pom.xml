@@ -62,7 +62,7 @@
                 </executions>
                 <configuration>
                     <!-- Directory for caching NVD data -->
-                    <dataDirectory>/cache/dependency-check</dataDirectory>
+                    <dataDirectory>/home/jenkins/dependency-cache</dataDirectory>
 
                     <!-- Optional: Fail build on vulnerabilities -->
                     <failBuildOnCVSS>7.0</failBuildOnCVSS>
