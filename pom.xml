@@ -51,7 +51,7 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-                <version>8.0.0</version> <!-- Update version as needed -->
+                <version>8.2.1</version> <!-- Updated version -->
                 <executions>
                     <execution>
                         <phase>verify</phase> <!-- Executes during the verify phase -->
@@ -64,18 +64,22 @@
                     <!-- Directory for caching NVD data -->
                     <dataDirectory>/home/jenkins/dependency-cache</dataDirectory>
 
-                    <!-- Optional: Fail build on vulnerabilities -->
+                    <!-- Fail build if CVSS is above threshold -->
                     <failBuildOnCVSS>7.0</failBuildOnCVSS>
 
-                    <!-- Optional: Suppress warnings -->
+                    <!-- Directory for generating reports -->
+                    <outputDirectory>${project.build.directory}/dependency-check-reports</outputDirectory>
+
+                    <!-- Ensure to scan the project directory -->
+                    <scan>${project.basedir}</scan>
+
+                    <!-- Include or exclude specific file sets if needed -->
+                    <includeTestScope>false</includeTestScope>
+
+                    <!-- Suppression file for known safe vulnerabilities -->
                     <suppressionFiles>
                         <suppressionFile>dependency-check-suppression.xml</suppressionFile>
                     </suppressionFiles>
-
-                    <!-- Optional: Skip testing for certain scopes -->
-                    <scanSet>
-                        <scan>target/classes</scan> <!-- Ensure to scan your compiled code -->
-                    </scanSet>
                 </configuration>
             </plugin>
         </plugins>
